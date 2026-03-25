@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Imersão AI First para Mentores — Blenduca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:       #0a0a0a;
+  --bg2:      #121212;
+  --bg3:      #1a1a1a;
+  --red:      #dc2626;
+  --red2:     #ef4444;
+  --red-glow: rgba(220,38,38,.16);
+  --red-dim:  rgba(220,38,38,.07);
+  --white:    #ffffff;
+  --off:      #e6e6f0;
+  --muted:    #a3a3a3;
+  --border:   rgba(255,255,255,.08);
+  --border2:  rgba(220,38,38,.22);
+  --card:     rgba(255,255,255,.025);
+  --card2:    rgba(220,38,38,.055);
+  --fh:       'Inter', system-ui, sans-serif;       /* uppercase / headings */
+  --fb:       'Inter', system-ui, sans-serif;      /* body / lowercase */
+  --r:        10px;
+  --r2:       18px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--off);
+  font-family:var(--fb);
+  font-size:17px;
+  line-height:1.75;
+  overflow-x:hidden;
+  font-weight:300;
+}
+
+/* ── noise overlay ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.5;
+}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px;}
+
+/* ── typography ── */
+h1,h2,h3,h4,.play{
+  font-family:var(--fh);
+  line-height:1.12;
+  letter-spacing:.01em;
+}
+h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;}
+h2{font-size:clamp(1.7rem,3.5vw,2.7rem);font-weight:700;}
+h3{font-size:clamp(1.2rem,2vw,1.65rem);font-weight:700;}
+h4{font-size:1.05rem;font-weight:700;}
+
+p{font-family:var(--fb);font-weight:300;color:var(--muted);line-height:1.85;}
+strong{color:var(--off);font-weight:500;}
+em{font-style:normal;}
+
+.accent{color:var(--red);}
+.white{color:var(--white);}
+
+/* ── layout ── */
+.container{max-width:1080px;margin:0 auto;padding:0 24px;}
+.container--sm{max-width:740px;margin:0 auto;padding:0 24px;}
+section{position:relative;z-index:1;}
+
+/* ── glow ── */
+.glow{
+  position:absolute;border-radius:50%;
+  background:var(--red);filter:blur(130px);
+  opacity:.1;pointer-events:none;
+}
+
+/* ── badge ── */
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--card2);border:1px solid var(--border2);
+  border-radius:100px;padding:5px 16px;
+  font-family:var(--fh);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--red);
+}
+.badge::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--red);animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ── buttons ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--red);color:var(--white);
+  font-family:var(--fh);font-weight:700;font-size:.95rem;
+  padding:17px 38px;border-radius:var(--r);
+  border:none;cursor:pointer;text-decoration:none;
+  transition:all .22s;position:relative;overflow:hidden;
+  letter-spacing:.03em;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 55%);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(232,37,58,.38);background:var(--red2);}
+.btn--lg{padding:20px 50px;font-size:1rem;}
+.btn--ghost{
+  background:transparent;border:1.5px solid var(--border);color:var(--off);
+}
+.btn--ghost:hover{border-color:var(--red);color:var(--white);box-shadow:0 6px 28px var(--red-glow);}
+
+/* ── nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,10,10,.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--fh);font-weight:700;font-size:1.05rem;
+  color:var(--white);text-decoration:none;letter-spacing:.06em;
+}
+.nav-logo span{color:var(--red);}
+.nav-btn{font-size:.85rem;padding:11px 24px;}
+.icon-inline { width: 1.1em; height: 1.1em; vertical-align: -0.15em; display: inline-block; }
+.icon-sm { width: 18px; height: 18px; display: inline-block; }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:140px 0 100px;position:relative;overflow:hidden;
+}
+#hero .glow{width:800px;height:800px;top:-300px;left:-200px;}
+#hero .glow:nth-child(2){width:360px;height:360px;top:auto;bottom:-80px;right:-60px;left:auto;opacity:.06;}
+
+.hero-wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:stretch;}
+
+.hero-badge{margin-bottom:28px;}
+
+.hero-h1{margin-bottom:20px;}
+.hero-h1 .line-red{color:var(--red);display:block;}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--muted);
+  max-width:580px;margin-bottom:36px;line-height:1.9;
+  font-weight:300;
+}
+.hero-sub strong{color:var(--off);font-weight:500;}
+
+.hero-meta{
+  display:flex;flex-wrap:wrap;gap:20px;
+  margin-bottom:44px;
+}
+.meta-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:.88rem;color:var(--muted);font-family:var(--fb);
+}
+.meta-item .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);flex-shrink:0;
+}
+
+.hero-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:20px;}
+.hero-micro{
+  font-size:.78rem;color:var(--muted);
+  display:flex;align-items:center;gap:6px;
+}
+
+/* hero card */
+.hero-card{
+  background:rgba(255,255,255,0.02);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--r2);padding:40px;
+  position:relative;overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+.hero-price-label{font-size:.85rem;color:var(--red);margin-bottom:6px;font-family:var(--fh);letter-spacing:.1em;font-weight:700;text-transform:uppercase;}
+.hero-price{
+  font-family:var(--fh);font-size:4.8rem;font-weight:800;
+  color:var(--white);line-height:0.9;margin-bottom:28px;
+  text-shadow: 0 0 32px rgba(220,38,38,0.4);
+}
+.hero-price sup{font-size:2rem;color:var(--red);vertical-align:super;margin-right:2px;font-weight:800;}
+.card-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;}
+.card-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.88rem;color:var(--off);font-family:var(--fb);font-weight:300;
+}
+.card-list li i{color:var(--red);flex-shrink:0;margin-top:2px;}
+.card-btn{width:100%;justify-content:center;}
+
+/* ══════════════════════════════════════
+   STATS
+══════════════════════════════════════ */
+#stats{
+  padding:60px 0;
+  background:var(--bg2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.stats-row{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;
+}
+.stat{
+  background:var(--bg2);padding:36px 28px;text-align:center;
+}
+.stat-n{
+  font-family:var(--fh);font-size:2.6rem;font-weight:700;
+  color:var(--white);line-height:1;margin-bottom:8px;
+}
+.stat-n em{color:var(--red);}
+.stat-l{font-size:.82rem;color:var(--muted);line-height:1.5;font-family:var(--fb);font-weight:300;}
+
+/* ══════════════════════════════════════
+   PROBLEM / CONTRAST
+══════════════════════════════════════ */
+#problem{padding:120px 0;}
+
+.problem-intro{
+  font-size:1.1rem;color:var(--off);
+  max-width:660px;margin:0 auto 56px;
+  text-align:center;line-height:1.9;font-weight:300;
+}
+
+/* two-column cards */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:60px;}
+
+.compare-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:36px;position:relative;overflow:hidden;
+}
+.compare-card.good{border-color:var(--border2);background:var(--card2);}
+.compare-card.good::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--red),transparent);
+}
+.compare-tag{
+  font-family:var(--fh);font-size:.75rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:22px;padding-bottom:16px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.compare-tag.bad{color:var(--muted);}
+.compare-tag.good{color:var(--red);}
+.compare-items{list-style:none;display:flex;flex-direction:column;gap:13px;}
+.compare-items li{
+  display:flex;align-items:flex-start;gap:11px;
+  font-size:.9rem;color:var(--muted);line-height:1.55;
+  font-family:var(--fb);font-weight:300;
+}
+.compare-items li i{flex-shrink:0;margin-top:2px;}
+.compare-items.good li{color:var(--off);}
+.compare-items.good li i{color:var(--red);}
+
+/* pivot quote */
+.pivot{
+  text-align:center;padding:64px 0 48px;
+}
+.pivot blockquote{
+  font-family:var(--fh);font-size:clamp(1.2rem,2.5vw,1.85rem);font-weight:700;
+  color:var(--white);max-width:720px;margin:0 auto 14px;line-height:1.35;
+}
+.pivot blockquote em{color:var(--red);}
+.pivot cite{font-size:.82rem;color:var(--muted);font-style:normal;font-family:var(--fb);}
+
+/* ══════════════════════════════════════
+   FOR WHO
+══════════════════════════════════════ */
+#forwho{padding:120px 0;background:var(--bg2);}
+
+.forwho-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px;}
+
+.forwho-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:36px;
+}
+.forwho-card.yes{background:var(--card2);border-color:var(--border2);position:relative;overflow:hidden;}
+.forwho-card.yes::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--red),transparent);
+}
+.forwho-tag{
+  font-family:var(--fh);font-size:.75rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:22px;padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.forwho-tag.yes{color:var(--red);}
+.forwho-tag.no{color:var(--muted);}
+.forwho-list{list-style:none;display:flex;flex-direction:column;gap:14px;}
+.forwho-list li{
+  display:flex;align-items:flex-start;gap:11px;
+  font-size:.9rem;line-height:1.55;font-family:var(--fb);font-weight:300;
+}
+.forwho-list li i{flex-shrink:0;margin-top:2px;}
+.forwho-list.yes li{color:var(--off);}
+.forwho-list.yes li i{color:var(--red);}
+.forwho-list.no li{color:var(--muted);}
+
+/* ══════════════════════════════════════
+   DELIVERABLES
+══════════════════════════════════════ */
+#deliverables{padding:120px 0;}
+
+.deliv-intro{
+  font-size:1rem;color:var(--muted);max-width:580px;
+  margin:0 auto 56px;text-align:center;line-height:1.85;
+  font-style:italic;font-family:var(--fb);
+}
+
+.deliv-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+
+.deliv-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:28px 30px;
+  display:flex;gap:18px;align-items:flex-start;
+  transition:border-color .2s,background .2s;
+}
+.deliv-item:hover{border-color:var(--border2);background:var(--card2);}
+.deliv-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;flex-shrink:0;
+}
+.deliv-text h4{
+  font-family:var(--fh);color:var(--white);
+  margin-bottom:5px;font-size:.95rem;
+}
+.deliv-text p{font-size:.85rem;line-height:1.7;}
+
+/* ══════════════════════════════════════
+   SCHEDULE
+══════════════════════════════════════ */
+#schedule{padding:120px 0;background:var(--bg2);}
+
+.timeline{
+  max-width:720px;margin:56px auto 0;
+  position:relative;
+}
+.timeline::before{
+  content:'';position:absolute;left:26px;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,transparent,var(--border2) 20%,var(--border2) 80%,transparent);
+}
+.tl-item{display:flex;gap:24px;padding:24px 0;}
+.tl-dot{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--bg3);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  font-family:var(--fh);font-size:.72rem;font-weight:700;
+  color:var(--muted);position:relative;z-index:1;
+  transition:all .2s;
+}
+.tl-item.on .tl-dot{
+  border-color:var(--red);color:var(--red);
+  background:var(--card2);box-shadow:0 0 0 5px var(--red-dim);
+}
+.tl-body{padding-top:10px;}
+.tl-time{
+  font-family:var(--fh);font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--red);margin-bottom:4px;
+}
+.tl-title{
+  font-family:var(--fh);font-weight:700;color:var(--white);
+  font-size:1rem;margin-bottom:5px;
+}
+.tl-desc{font-size:.86rem;color:var(--muted);line-height:1.7;font-family:var(--fb);font-weight:300;}
+
+/* ══════════════════════════════════════
+   EXPERTS
+══════════════════════════════════════ */
+#experts{padding:120px 0;}
+
+.experts-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px;}
+
+.expert-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r2);padding:38px;
+  position:relative;overflow:hidden;transition:border-color .3s;
+}
+.expert-card:hover{border-color:var(--border2);}
+.expert-card::after{
+  content:'';position:absolute;bottom:-50px;right:-50px;
+  width:160px;height:160px;border-radius:50%;
+  background:var(--red);opacity:.04;filter:blur(40px);
+}
+.expert-av{
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(220,38,38,0.08); /* subtle glow if transparent */
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  border:2px solid var(--border2);
+  position:relative;overflow:hidden;
+}
+.expert-av img{width:100%;height:100%;object-fit:cover;}
+.expert-name{font-family:var(--fh);font-weight:700;color:var(--white);font-size:1.25rem;margin-bottom:3px;}
+.expert-role{font-size:.78rem;color:var(--red);font-family:var(--fh);font-weight:700;letter-spacing:.04em;margin-bottom:16px;}
+.expert-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
+.tag{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:100px;padding:3px 12px;
+  font-size:.72rem;color:var(--muted);font-family:var(--fb);font-weight:300;
+}
+.expert-bio{font-size:.86rem;color:var(--muted);line-height:1.8;font-family:var(--fb);font-weight:300;}
+
+/* ══════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════ */
+#testimonials{padding:120px 0;background:var(--bg2);}
+
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:56px;}
+
+.testi-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:30px;
+  display:flex;flex-direction:column;gap:18px;
+  transition:border-color .2s;
+}
+.testi-card:hover{border-color:var(--border2);}
+.testi-stars{color:var(--red);font-size:.85rem;letter-spacing:2px;}
+.testi-text{
+  font-size:.88rem;color:var(--off);line-height:1.8;
+  font-style:italic;flex:1;font-family:var(--fb);font-weight:300;
+}
+.testi-author{
+  display:flex;align-items:center;gap:11px;
+  padding-top:14px;border-top:1px solid var(--border);
+}
+.t-av{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red),#7f1d1d);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-weight:700;font-size:.85rem;
+  color:var(--white);flex-shrink:0;
+}
+.t-name{font-weight:500;font-size:.85rem;color:var(--white);font-family:var(--fb);}
+.t-role{font-size:.75rem;color:var(--muted);font-family:var(--fb);font-weight:300;}
+
+/* ══════════════════════════════════════
+   FAQ
+══════════════════════════════════════ */
+#faq{padding:120px 0;}
+
+.faq-list{max-width:720px;margin:56px auto 0;display:flex;flex-direction:column;gap:10px;}
+
+.faq-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;transition:border-color .2s;
+}
+.faq-item.open{border-color:var(--border2);}
+.faq-q{
+  padding:22px 26px;
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;gap:16px;
+  font-family:var(--fh);font-weight:700;font-size:.9rem;
+  color:var(--white);user-select:none;
+}
+.faq-icon{
+  flex-shrink:0;width:22px;height:22px;border-radius:50%;
+  background:var(--card2);display:flex;align-items:center;justify-content:center;
+  color:var(--red);font-size:.65rem;transition:transform .3s;
+}
+.faq-item.open .faq-icon{transform:rotate(180deg);}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .35s ease;
+  padding:0 26px;
+}
+.faq-item.open .faq-a{max-height:280px;padding:0 26px 22px;}
+.faq-a p{font-size:.88rem;color:var(--muted);line-height:1.85;font-family:var(--fb);font-weight:300;}
+
+/* ══════════════════════════════════════
+   CTA FINAL
+══════════════════════════════════════ */
+#cta{padding:140px 0;position:relative;overflow:hidden;}
+#cta .glow{width:900px;height:900px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:.07;}
+
+.cta-wrap{text-align:center;position:relative;z-index:1;}
+
+.cta-headline{
+  font-family:var(--fh);font-size:clamp(1.8rem,4vw,2.9rem);font-weight:700;
+  color:var(--white);max-width:800px;margin:28px auto 0;
+  line-height:1.2;
+}
+.cta-headline em{color:var(--red);}
+
+.price-box{
+  display:inline-block;
+  background:var(--bg2);border:1px solid var(--border2);
+  border-radius:var(--r2);padding:48px 60px;
+  margin:52px 0;position:relative;overflow:hidden;
+}
+.price-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+}
+.price-label{
+  font-family:var(--fh);font-size:.78rem;font-weight:700;
+  color:var(--muted);margin-bottom:8px;letter-spacing:.1em;
+}
+.price-big{
+  font-family:var(--fh);font-size:3.8rem;font-weight:700;
+  color:var(--white);line-height:1;margin-bottom:6px;
+}
+.price-big em{color:var(--red);}
+.price-sub{font-size:.85rem;color:var(--muted);margin-bottom:32px;font-family:var(--fb);font-weight:300;}
+
+.price-features{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:14px 28px;
+  margin-bottom:32px;
+}
+.price-feat{
+  display:flex;align-items:center;gap:7px;
+  font-size:.83rem;color:var(--off);font-family:var(--fb);font-weight:300;
+}
+.price-feat i{color:var(--red);}
+
+.cta-close{
+  font-size:.86rem;color:var(--muted);
+  max-width:560px;margin:22px auto 0;
+  line-height:1.75;font-family:var(--fb);font-weight:300;
+}
+
+/* closing copy box */
+.close-box{
+  max-width:620px;margin:40px auto 0;text-align:left;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--r2);padding:30px 36px;
+}
+.close-box p{
+  font-size:.92rem;color:var(--off);line-height:1.9;
+  font-family:var(--fb);font-weight:300;
+}
+.close-box strong{color:var(--red);font-weight:500;}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{
+  padding:44px 0;border-top:1px solid var(--border);background:var(--bg);
+}
+.footer-row{
+  display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:14px;
+}
+.footer-logo{font-family:var(--fh);font-weight:700;color:var(--white);font-size:.95rem;letter-spacing:.06em;}
+.footer-logo span{color:var(--red);}
+.footer-links{display:flex;gap:22px;}
+.footer-links a{font-size:.8rem;color:var(--muted);text-decoration:none;font-family:var(--fb);transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:.75rem;color:var(--muted);width:100%;text-align:center;margin-top:14px;font-family:var(--fb);font-weight:300;}
+
+
+.sec-label{text-align:center;margin-bottom:18px;}
+.sec-title{text-align:center;margin-bottom:14px;}
+.sec-sub{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 56px;line-height:1.85;font-family:var(--fb);font-weight:300;}
+
+/* ── animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+.anim{opacity:0;}
+.anim.in{animation:fadeUp .6s ease forwards;}
+.d1{animation-delay:.08s;}.d2{animation-delay:.16s;}.d3{animation-delay:.24s;}.d4{animation-delay:.32s;}
+
+/* ── responsive ── */
+@media(max-width:900px){
+  .hero-wrap{grid-template-columns:1fr;}.hero-card{display:none;}
+  .compare{grid-template-columns:1fr;}
+  .forwho-grid{grid-template-columns:1fr;}
+  .deliv-grid{grid-template-columns:1fr;}
+  .experts-grid{grid-template-columns:1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr;}
+  #sticky{display:none;}
+  .price-box{padding:36px 24px;}
+  .price-big{font-size:2.8rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" style="display:flex;align-items:center;padding:4px 0;">
+    <img src="logo.png" alt="Blenduca" style="height:26px;width:auto;" />
+  </a>
+  <a href="#cta" class="btn nav-btn">Garantir Minha Vaga →</a>
+</nav>
+
+<!-- ══ HERO ══════════════════════════════ -->
+<section id="hero">
+  <div class="glow"></div>
+  <div class="glow"></div>
+  <div class="container">
+    <div class="hero-wrap">
+
+      <div>
+        <div class="hero-badge anim">
+          <span class="badge"><i data-lucide="calendar" class="icon-sm"></i> 11 de abril · Evento ao vivo</span>
+        </div>
+
+        <h1 class="hero-h1 anim d1" style="font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 24px;">
+          Escale sua Mentoria com <br/>
+          <span class="line-red">Inteligência Artificial</span>
+        </h1>
+
+        <h2 style="font-size: 1.25rem; color: var(--off); font-weight: 400; font-family: var(--fb); margin-bottom: 12px; line-height: 1.4;" class="anim d2">
+          Automatize seu operacional e molde um método à prova de&nbsp;gargalos
+        </h2>
+
+        <p class="hero-sub anim d2" style="font-size: 0.95rem; max-width: 520px; line-height: 1.6; margin-bottom: 36px;">
+          Em um único sábado, descubra como a IA pode assumir tarefas repetitivas e criar a base para um negócio escalável — <strong>sem você precisar ser técnico</strong>.
+        </p>
+
+        <div class="hero-meta anim d3" style="margin-bottom: 32px; gap: 14px;">
+          <div class="meta-item"><span class="dot"></span>Sábado, 11 de abril</div>
+          <div class="meta-item"><span class="dot"></span>14h às 18h</div>
+          <div class="meta-item"><span class="dot"></span>Ao vivo & Online</div>
+        </div>
+
+        <div class="hero-ctas anim d4" style="margin-bottom: 14px;">
+          <a href="#cta" class="btn btn--lg" style="padding: 16px 42px;">Garantir Vaga por R$ 97 →</a>
+        </div>
+        <p class="hero-micro anim d4" style="animation-delay:.42s">
+          <i data-lucide="lock" class="icon-inline"></i> Pagamento seguro &nbsp;·&nbsp; <i data-lucide="shield-check" class="icon-inline"></i> Garantia de 7 dias
+        </p>
+      </div>
+
+      <div class="hero-card anim d2">
+        <div>
+          <p class="hero-price-label">ACESSO EXCLUSIVO</p>
+          <p class="hero-price"><sup>R$</sup>97</p>
+          <div style="height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 28px;"></div>
+          <ul class="card-list" style="gap: 16px; margin-bottom: 36px; font-size: 0.95rem;">
+            <li><i data-lucide="check" class="icon-sm"></i> Imersão ao vivo · 11 de abril</li>
+            <li><i data-lucide="check" class="icon-sm"></i> Visão sistêmica de IA aplicada</li>
+            <li><i data-lucide="check" class="icon-sm"></i> Mapa do operacional escalável</li>
+            <li><i data-lucide="check" class="icon-sm"></i> Playbook AI First para Mentores</li>
+          </ul>
+        </div>
+        <a href="#cta" class="btn card-btn" style="padding: 22px; font-size: 1.05rem;">Garantir Minha Vaga →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS ══════════════════════════════ -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat anim">
+        <div class="stat-n"><em>+</em>200</div>
+        <div class="stat-l">Negócios de conhecimento acelerados pela&nbsp;Blenduca</div>
+      </div>
+      <div class="stat anim d1">
+        <div class="stat-n">R$<em>40M</em></div>
+        <div class="stat-l">Em resultados gerados pelos nossos&nbsp;alunos</div>
+      </div>
+      <div class="stat anim d2">
+        <div class="stat-n"><em>+</em>60k</div>
+        <div class="stat-l">Vidas transformadas no ecossistema&nbsp;Blenduca</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROBLEM ════════════════════════════ -->
+<section id="problem">
+  <div class="container--sm">
+    <div class="sec-label anim"><span class="badge">O Problema Real</span></div>
+    <h2 class="sec-title anim d1">Você construiu um método que funciona<br/><em class="accent">Mas existe uma contradição</em></h2>
+    <p class="problem-intro anim d2">
+      Sua agenda está cheia. Seus clientes renovam. Os resultados são reais. E ainda assim existe uma frase que não sai da&nbsp;cabeça:
+    </p>
+    <div class="anim d3" style="max-width:600px;margin:0 auto 64px;text-align:center;">
+      <p style="font-family:var(--fh);font-size:1.1rem;color:var(--off);font-style:italic;border-left:3px solid var(--red);padding-left:20px;text-align:left;line-height:1.7;">
+        "Se eu parar de atender amanhã,<br/>meu faturamento vai a zero."
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="compare">
+      <div class="compare-card anim">
+        <div class="compare-tag bad"><i data-lucide="minus" class="icon-sm"></i> Modelo Tradicional</div>
+        <ul class="compare-items">
+          <li><i data-lucide="x" class="icon-sm"></i> Age como "funcionário de luxo" — refém da agenda</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Se parar de atender, o faturamento para junto</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Montanha-russa de faturamento todo mês</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Horas perdidas em operacional que não gera receita</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Método preso na cabeça — some se você parar</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Cresce apenas na proporção do quanto consegue aparecer</li>
+        </ul>
+      </div>
+      <div class="compare-card good anim d1">
+        <div class="compare-tag good"><i data-lucide="sparkles" class="icon-sm"></i> Modelo AI First</div>
+        <ul class="compare-items good">
+          <li><i data-lucide="check" class="icon-sm"></i> Método transformado em sistema operacional escalável</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Negócio funciona além da sua agenda</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Faturamento recorrente e previsível todo mês</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Operacional automatizado — foco no que só você faz</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Método documentado, replicável e protegido</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Central de inteligência integrada ao negócio</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pivot anim">
+      <blockquote>
+        "O jogo não é usar IA. O jogo é decidir se a IA vai só acelerar o que você já faz — ou se vai ajudar você a construir um modelo que <em>escala sem te transformar no&nbsp;gargalo.</em>"
+      </blockquote>
+      <cite>— Ricardo Werlang, Co-Founder & CTO · Blenduca</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOR WHO ══════════════════════════════ -->
+<section id="forwho">
+  <div class="container">
+    <div class="sec-label anim"><span class="badge">Para Quem É</span></div>
+    <h2 class="sec-title anim d1" style="max-width: 700px; margin: 0 auto 14px;">Esta imersão foi feita para você — <em class="accent">mas não para todo mundo</em></h2>
+    <p class="sec-sub anim d2">Precisamos ser honestos sobre quem vai extrair o máximo desta imersão. Não é um evento para qualquer um. É para quem já chegou longe o suficiente para entender que o modelo atual tem um&nbsp;teto.</p>
+
+    <div class="forwho-grid">
+      <div class="forwho-card yes anim">
+        <div class="forwho-tag yes"><i data-lucide="sparkles" class="icon-sm"></i> É para você se...</div>
+        <ul class="forwho-list yes">
+          <li><i data-lucide="check" class="icon-sm"></i> Você é mentor(a), consultor(a) ou palestrante com método validado</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Você fatura entre R$ 10k e R$ 50k/mês mas sente que está no teto</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Você quer usar IA mas não sabe por onde começar de forma estratégica</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Você está cansado(a) de horas em tarefas que poderiam ser automáticas</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Você quer escalar sem contratar mais gente e sem sacrificar qualidade</li>
+          <li><i data-lucide="check" class="icon-sm"></i> Você quer um modelo que funcione além da sua presença</li>
+        </ul>
+      </div>
+      <div class="forwho-card anim d1">
+        <div class="forwho-tag no"><i data-lucide="ban" class="icon-sm"></i> Não é para você se...</div>
+        <ul class="forwho-list no">
+          <li><i data-lucide="x" class="icon-sm"></i> Você está começando do zero e ainda não tem clientes</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Você quer fórmula mágica de renda passiva sem esforço</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Você não está disposto(a) a implementar na semana seguinte</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Você acredita que IA vai substituir seu papel como mentor</li>
+          <li><i data-lucide="x" class="icon-sm"></i> Você quer mais um curso genérico de ferramentas de IA</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DELIVERABLES ═══════════════════════ -->
+<section id="deliverables">
+  <div class="container">
+    <div class="sec-label anim"><span class="badge">O Que Você Vai Levar</span></div>
+    <h2 class="sec-title anim d1">Não o que vai <em class="accent">aprender</em> — o que vai ter na&nbsp;mão</h2>
+    <p class="deliv-intro anim d2">Você sai do dia 11 com entregáveis prontos para implementar na semana seguinte.</p>
+
+    <div class="deliv-grid">
+      <div class="deliv-item anim">
+        <div class="deliv-icon"><i data-lucide="map" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Mapa do Operacional Inteligente</h4>
+          <p>Quais tarefas repetitivas a IA pode assumir hoje — em qual ordem e com quais ferramentas. Você sai sabendo exatamente por onde começar, sem paralisia.</p>
+        </div>
+      </div>
+      <div class="deliv-item anim d1">
+        <div class="deliv-icon"><i data-lucide="brain" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Estrutura para Documentar Seu Método</h4>
+          <p>Como transformar o que está na sua cabeça em um sistema operacional replicável — que existe além das suas sessões e escala sem sua presença constante.</p>
+        </div>
+      </div>
+      <div class="deliv-item anim d2">
+        <div class="deliv-icon"><i data-lucide="settings" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Central de Inteligência Mapeada</h4>
+          <p>Uma arquitetura integrada de como a IA se encaixa no seu modelo específico — não um template genérico, mas uma visão aplicada à sua realidade.</p>
+        </div>
+      </div>
+      <div class="deliv-item anim d3">
+        <div class="deliv-icon"><i data-lucide="book-open" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Playbook AI First para Mentores</h4>
+          <p>Material exclusivo entregue ao vivo com os frameworks, ferramentas e fluxos das 4 horas — para consultar e implementar no seu ritmo.</p>
+        </div>
+      </div>
+      <div class="deliv-item anim">
+        <div class="deliv-icon"><i data-lucide="target" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Visão Sistêmica Completa</h4>
+          <p>Como a IA se encaixa em cada área do negócio — do operacional ao estratégico — sem testar ferramenta por ferramenta no escuro.</p>
+        </div>
+      </div>
+      <div class="deliv-item anim d1">
+        <div class="deliv-icon"><i data-lucide="clapperboard" class="icon-inline"></i></div>
+        <div class="deliv-text">
+          <h4>Gravação + Acesso ao Conteúdo</h4>
+          <p>A gravação completa fica disponível por um período após o evento — para revisar, pausar e implementar com calma nos dias seguintes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SCHEDULE ════════════════════════════ -->
+<section id="schedule">
+  <div class="container">
+    <div class="sec-label anim"><span class="badge">Programação · 11 de Abril</span></div>
+    <h2 class="sec-title anim d1">4 horas que mudam <em class="accent">o seu modelo de&nbsp;negócio</em></h2>
+    <p class="sec-sub anim d2">Sábado, 11 de abril · 14h às 18h · Online ao vivo</p>
+
+    <div class="timeline">
+      <div class="tl-item on anim">
+        <div class="tl-dot">14h</div>
+        <div class="tl-body">
+          <p class="tl-time">Abertura</p>
+          <p class="tl-title">O Contexto AI First — Por Que Agora</p>
+          <p class="tl-desc">Panorama do mercado de mentoria em 2026 e por que os próximos 12 meses são a janela de oportunidade mais importante para mentores e consultores.</p>
+        </div>
+      </div>
+      <div class="tl-item on anim d1">
+        <div class="tl-dot">14h30</div>
+        <div class="tl-body">
+          <p class="tl-time">Bloco 1</p>
+          <p class="tl-title">IA no Operacional — Automatizando o Que Rouba Seu Tempo</p>
+          <p class="tl-desc">Mapeamento ao vivo das tarefas repetitivas que a IA já consegue assumir hoje — com ferramentas práticas e demonstrações reais.</p>
+        </div>
+      </div>
+      <div class="tl-item on anim d2">
+        <div class="tl-dot">15h15</div>
+        <div class="tl-body">
+          <p class="tl-time">Bloco 2</p>
+          <p class="tl-title">IA no Método — Construindo Seu Sistema Operacional</p>
+          <p class="tl-desc">Como transformar o que está na sua cabeça em um sistema operacional inteligente e replicável — usando IA para organizar, proteger e escalar seu método.</p>
+        </div>
+      </div>
+      <div class="tl-item anim d3">
+        <div class="tl-dot">16h</div>
+        <div class="tl-body">
+          <p class="tl-time">Pausa</p>
+          <p class="tl-title">Intervalo — 15 minutos</p>
+          <p class="tl-desc">Tempo para processar, anotar e se preparar para o bloco mais prático da imersão.</p>
+        </div>
+      </div>
+      <div class="tl-item on anim">
+        <div class="tl-dot">16h15</div>
+        <div class="tl-body">
+          <p class="tl-time">Bloco 3</p>
+          <p class="tl-title">Central de Inteligência — A Visão do Ecossistema Completo</p>
+          <p class="tl-desc">Como integrar todos os elementos em uma central de inteligência coerente — que funciona enquanto você faz o que só você pode fazer.</p>
+        </div>
+      </div>
+      <div class="tl-item on anim d1">
+        <div class="tl-dot">17h</div>
+        <div class="tl-body">
+          <p class="tl-time">Bloco 4</p>
+          <p class="tl-title">Demonstrações Práticas ao Vivo — Tela Aberta, Ferramentas Reais</p>
+          <p class="tl-desc">Ricardo abre a tela e mostra — sem corte — como as ferramentas funcionam na prática dentro de um negócio real de mentoria.</p>
+        </div>
+      </div>
+      <div class="tl-item anim d2">
+        <div class="tl-dot">17h50</div>
+        <div class="tl-body">
+          <p class="tl-time">Encerramento</p>
+          <p class="tl-title">Q&A + Entrega do Playbook + Próximos Passos</p>
+          <p class="tl-desc">Perguntas ao vivo, entrega do Playbook AI First e orientação sobre o que implementar primeiro na semana seguinte.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERTS ════════════════════════════ -->
+<section id="experts">
+  <div class="container">
+    <div class="sec-label anim"><span class="badge">Seus Mentores-Guia</span></div>
+    <h2 class="sec-title anim d1">A combinação que <em class="accent">nenhum outro evento&nbsp;tem</em></h2>
+    <p class="sec-sub anim d2">Profundidade técnica em IA + visão estratégica de negócios de conhecimento. A combinação que nenhum outro evento de mentoria oferece.</p>
+
+    <div class="experts-grid">
+      <div class="expert-card anim">
+        <div class="expert-av">
+          <img src="ricardo.png" alt="Ricardo Werlang" />
+        </div>
+        <p class="expert-name">Ricardo Werlang</p>
+        <p class="expert-role">Co-Founder & CTO · Blenduca</p>
+        <div class="expert-tags">
+          <span class="tag">Eng. de Computação</span>
+          <span class="tag">Mestre em IA</span>
+          <span class="tag">+15 anos em tecnologia</span>
+        </div>
+        <p class="expert-bio">Ricardo não descobriu a Inteligência Artificial ontem. Há mais de 15 anos trabalha na interseção entre tecnologia, educação e negócios. Mestre em IA com ênfase em Gestão do Conhecimento — tem o dom raro de pegar tecnologia complexa e transformar em método aplicável para quem não é técnico. Já ajudou mais de 200 mentores a construírem modelos escaláveis com IA no centro.</p>
+      </div>
+      <div class="expert-card anim d1">
+        <div class="expert-av">
+          <img src="silviane.png" alt="Silviane Lawall" />
+        </div>
+        <p class="expert-name">Silviane Lawall</p>
+        <p class="expert-role">Co-Founder & CEO · Blenduca</p>
+        <div class="expert-tags">
+          <span class="tag">Mestre em Eng. Elétrica</span>
+          <span class="tag">MBA Gestão Estratégica</span>
+          <span class="tag">+20 anos de negócios</span>
+        </div>
+        <p class="expert-bio">Silviane não chegou ao mercado de mentoria pela teoria. Chegou pelos 20 anos de trincheira como gestora e empreendedora. Mestre em Engenharia Elétrica, dois MBAs. Na Blenduca, lidera a visão e estratégia do Expert Hub — o ecossistema que já impactou mais de 60.000 vidas. Especialidade: fazer o expert enxergar além do modelo atual e construir algo que escala sem ele ser o gargalo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ═══════════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="sec-label anim"><span class="badge">Transformações Reais</span></div>
+    <h2 class="sec-title anim d1">O que quem passou pela <em class="accent">Blenduca</em> está&nbsp;dizendo</h2>
+    <p class="sec-sub anim d2">Mais de 200 negócios de conhecimento acelerados. Estas são algumas das histórias.</p>
+
+    <div class="testi-grid">
+      <div class="testi-card anim">
+        <div class="testi-stars" style="display:flex;gap:4px;">
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+        </div>
+        <p class="testi-text">"Meu negócio já existia e eu já tinha bons resultados, mas eu sabia que poderia ir além. Quando conheci a Blenduca, encontrei o método que me ajudou a organizar, estruturar e potencializar tudo o que eu já fazia. Hoje entrego muito mais valor aos meus clientes."</p>
+        <div class="testi-author">
+          <div class="t-av">SC</div>
+          <div>
+            <p class="t-name">Samia Cruañes Dias</p>
+            <p class="t-role">Consultoria e Treinamentos em Vendas</p>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card anim d1">
+        <div class="testi-stars" style="display:flex;gap:4px;">
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+        </div>
+        <p class="testi-text">"A Blenduca foi mais do que uma mentoria — foi o impulso que eu precisava. A metodologia de vocês é o que materializou tudo. Eu já pensava em fazer algo, mas não sabia por onde começar. Vocês pegaram na minha mão e me mostraram o caminho."</p>
+        <div class="testi-author">
+          <div class="t-av">AL</div>
+          <div>
+            <p class="t-name">Aluno Blenduca</p>
+            <p class="t-role">Negócio de Conhecimento</p>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card anim d2">
+        <div class="testi-stars" style="display:flex;gap:4px;">
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+          <i data-lucide="star" class="icon-sm" style="fill:var(--red);"></i>
+        </div>
+        <p class="testi-text">"A Blenduca não ensina só metodologia — ela nos coloca na vanguarda, especialmente quando o assunto é inovação e inteligência artificial. Para quem atua com consultoria e mentoria, isso faz toda a diferença no posicionamento de mercado."</p>
+        <div class="testi-author">
+          <div class="t-av">SC</div>
+          <div>
+            <p class="t-name">Samia Cruañes Dias</p>
+            <p class="t-role">Consultoria e Treinamentos em Vendas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ════════════════════════════════ -->
+<section id="faq">
+  <div class="container--sm">
+    <div class="sec-label anim"><span class="badge">Dúvidas Frequentes</span></div>
+    <h2 class="sec-title anim d1">Ainda tem <em class="accent">alguma&nbsp;dúvida?</em></h2>
+    <p class="sec-sub anim d2">Respondemos as perguntas mais comuns — com honestidade e sem enrolação.</p>
+
+    <div class="faq-list">
+
+      <div class="faq-item anim">
+        <div class="faq-q" onclick="faq(this)">
+          <span>Preciso ser técnico para aproveitar a imersão?</span>
+          <span class="faq-icon"><i data-lucide="chevron-down" style="width:14px;height:14px;"></i></span>
+        </div>
+        <div class="faq-a">
+          <p>Não. A imersão foi desenhada para mentores e consultores — não para programadores. Ricardo tem o dom de traduzir tecnologia complexa em linguagem prática. Se você sabe usar Instagram e WhatsApp, consegue implementar o que vai aprender.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim d1">
+        <div class="faq-q" onclick="faq(this)">
+          <span>Meu negócio é muito personalizado. Dá mesmo para usar IA?</span>
+          <span class="faq-icon"><i data-lucide="chevron-down" style="width:14px;height:14px;"></i></span>
+        </div>
+        <div class="faq-a">
+          <p>Essa é a objeção mais comum — e a que mais se dissolve quando você vê na prática. IA não automatiza sua expertise. Ela automatiza o bastidor invisível: follow-up, agendamento, criação de conteúdo repetitivo, documentação de sessões. Você continua sendo o mentor. A IA assume o que consome suas horas sem gerar valor proporcional.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim d2">
+        <div class="faq-q" onclick="faq(this)">
+          <span>Já tentei usar IA antes e não funcionou. Por que seria diferente?</span>
+          <span class="faq-icon"><i data-lucide="chevron-down" style="width:14px;height:14px;"></i></span>
+        </div>
+        <div class="faq-a">
+          <p>Porque provavelmente você tentou de forma isolada — uma ferramenta aqui, um prompt ali, sem arquitetura. A IA só gera resultado quando há um sistema por trás. O que a imersão entrega é uma visão sistêmica específica para o modelo de negócio de mentores — não mais uma ferramenta para testar, mas um mapa de integração para o que você já tem.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim">
+        <div class="faq-q" onclick="faq(this)">
+          <span>Quanto tempo vou precisar para implementar depois?</span>
+          <span class="faq-icon"><i data-lucide="chevron-down" style="width:14px;height:14px;"></i></span>
+        </div>
+        <div class="faq-a">
+          <p>O primeiro passo pode ser dado na mesma semana — com 1 a 2 horas de dedicação. Você vai sair sabendo exatamente por onde começar, sem dúvida e sem paralisia. A implementação é progressiva — não precisa reestruturar tudo de uma vez.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim d1">
+        <div class="faq-q" onclick="faq(this)">
+          <span>E se eu não conseguir assistir ao vivo no dia 11?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-a">
+          <p>A imersão é ao vivo — e recomendamos fortemente a presença, pois haverá demonstrações práticas e interações em tempo real. A gravação ficará disponível para todos os inscritos por um período após o evento.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim d2">
+        <div class="faq-q" onclick="faq(this)">
+          <span>R$ 97 parece acessível demais. Qual é a pegadinha?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-a">
+          <p>Nenhuma. O valor foi definido intencionalmente para qualificar o público — não para atrair curiosos, mas para ser acessível a quem está pronto para agir. Não há upsell obrigatório durante o evento. R$ 97 é o que está na página, é o que você paga.</p>
+        </div>
+      </div>
+
+      <div class="faq-item anim">
+        <div class="faq-q" onclick="faq(this)">
+          <span>E se eu não gostar ou sentir que não valeu?</span>
+          <span class="faq-icon">▼</span>
+        </div>
+        <div class="faq-a">
+          <p>Você tem 7 dias de garantia incondicional. Se até 7 dias após o evento você sentir que não valeu o investimento, devolvemos 100% do valor — sem burocracia, sem questionamento. O risco é nosso. A decisão é sua.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA FINAL ═══════════════════════════ -->
+<section id="cta">
+  <div class="glow"></div>
+  <div class="container">
+    <div class="cta-wrap">
+
+      <span class="badge anim"><i data-lucide="clock" class="icon-sm"></i> Inscrições encerram dia 10 de abril</span>
+
+      <h2 class="cta-headline anim d1">
+        Você passou anos construindo um método que transforma pessoas<br/>
+        <em>Agora é hora de protegê-lo e escalá-lo</em>
+      </h2>
+
+      <div class="price-box anim d2">
+        <p class="price-label">INVESTIMENTO ÚNICO</p>
+        <p class="price-big">R$&nbsp;<em>97</em></p>
+        <p class="price-sub">Imersão AI First para Mentores · 11 de abril · 14h às 18h · Online ao vivo</p>
+
+        <div class="price-features">
+          <span class="price-feat"><i data-lucide="check" class="icon-sm"></i> 4 horas de imersão ao vivo</span>
+          <span class="price-feat"><i data-lucide="check" class="icon-sm"></i> Playbook AI First para Mentores</span>
+          <span class="price-feat"><i data-lucide="check" class="icon-sm"></i> Gravação do evento</span>
+          <span class="price-feat"><i data-lucide="shield-check" class="icon-sm"></i> Garantia de 7 dias</span>
+          <span class="price-feat"><i data-lucide="zap" class="icon-sm"></i> Acesso imediato</span>
+        </div>
+
+        <a href="#" class="btn btn--lg" style="font-size:1rem;padding:22px 56px;">
+          SIM! QUERO MINHA VAGA NA IMERSÃO AI FIRST →
+        </a>
+        <p style="margin-top:14px;font-size:.78rem;color:var(--muted);font-family:var(--fb);font-weight:300;">
+          <i data-lucide="lock" class="icon-inline"></i> Pagamento 100% seguro via Eduzz &nbsp;·&nbsp; <i data-lucide="shield-check" class="icon-inline"></i> Garantia incondicional de 7 dias
+        </p>
+      </div>
+
+      <div class="close-box anim d3">
+        <p>
+          Existem dois tipos de mentores usando IA agora.<br/><br/>
+          O primeiro usa IA para acelerar a operação. O segundo usa IA para substituir a necessidade de operar tudo manualmente.<br/><br/>
+          O primeiro ficou mais eficiente. O segundo mudou de modelo.<br/><br/>
+          No dia 11 de abril, você decide qual caminho vai construir. <strong>A decisão começa aqui.</strong>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <a href="#" class="footer-logo" style="display:flex;align-items:center;padding:2px 0;">
+        <img src="logo.png" alt="Blenduca" style="height:22px;width:auto;" />
+      </a>
+      <div class="footer-links">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+        <a href="#">Contato</a>
+      </div>
+    </div>
+    <p class="footer-copy">
+      © 2026 Blenduca Inovação Educacional nos Negócios LTDA · Todos os direitos reservados<br/>
+      Chapecó - SC - Brasil · relacionamento@blenduca.com.br
+    </p>
+  </div>
+</footer>
+
+<script>
+// ── animations ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+document.querySelectorAll('.anim').forEach(el => obs.observe(el));
+
+// ── faq ──
+function faq(el) {
+  const item = el.closest('.faq-item');
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!open) item.classList.add('open');
+}
+
+// ── counter ──
+function count(el, target, prefix='') {
+  let n = 0;
+  const step = target / (1600 / 16);
+  const t = setInterval(() => {
+    n = Math.min(n + step, target);
+    el.textContent = prefix + Math.floor(n).toLocaleString('pt-BR');
+    if(n >= target) clearInterval(t);
+  }, 16);
+}
+new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    e.target.querySelectorAll('.stat-n').forEach(n => {
+      const t = n.textContent;
+      if(t.includes('200')) n.innerHTML = '<em>+</em><span></span>';
+      if(t.includes('40M')) n.innerHTML = 'R$<em>40M</em>';
+      if(t.includes('60k')) n.innerHTML = '<em>+</em><span></span>k';
+      const span = n.querySelector('span');
+      if(span && t.includes('200')) count(span, 200);
+      if(span && t.includes('60k')) count(span, 60);
+    });
+    e.unobserve(e.target);
+  });
+}, { threshold: 0.3 }).observe(document.getElementById('stats'));
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
