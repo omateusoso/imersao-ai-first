@@ -416,6 +416,7 @@ Actually .hero is inside <section> but .hero IS the child. */
 <section style="padding:0;position:relative;overflow:hidden">
   <div class="hero-bg"></div>
   <div class="hero-gl"></div>
+  <div class="hero-expert-img" style="position:absolute;top:0;right:0;width:100%;height:100%;background:url('hero-experts.png') no-repeat right bottom;background-size:contain;z-index:1;pointer-events:none;"></div>
   <div class="hero">
 
     <div class="hl">
@@ -446,13 +447,11 @@ Actually .hero is inside <section> but .hero IS the child. */
       </div>
     </div>
 
-    <div class="hr">
-      <div class="pw">
-        <div class="fb fb1"><div class="fbi ci-c"><img src="https://cdn.simpleicons.org/claude/D1CAC2" style="width:18px;height:18px"></div><div><span class="fbn">Claude</span><span class="fbs">Cowork · Skills · Code</span></div></div>
-        <div class="fb fb2"><div class="fbi ci-g"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" style="width:18px;height:18px"></div><div><span class="fbn">Gemini</span><span class="fbs">Google Workspace</span></div></div>
-        <div class="fb fb3"><div class="fbi ci-n"><img src="https://cdn.simpleicons.org/google/4285F4" style="width:18px;height:18px"></div><div><span class="fbn">NotebookLM</span><span class="fbs">Método documentado</span></div></div>
-        <div class="fb fb4"><div class="fbi ci-f"><img src="https://cdn.simpleicons.org/freepik/1273EB" style="width:18px;height:18px"></div><div><span class="fbn">Freepik AI</span><span class="fbs">Criação de conteúdo</span></div></div>
-      </div>
+    <div class="hr" style="position:relative;z-index:10;">
+      <div class="fb fb1" style="top:10%;right:30%;"><div class="fbi ci-c"><img src="https://cdn.simpleicons.org/claude/D1CAC2" style="width:18px;height:18px"></div><div><span class="fbn">Claude</span><span class="fbs">Cowork · Skills · Code</span></div></div>
+      <div class="fb fb2" style="top:40%;right:35%;"><div class="fbi ci-g"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2" style="width:18px;height:18px"></div><div><span class="fbn">Gemini</span><span class="fbs">Google Workspace</span></div></div>
+      <div class="fb fb3" style="bottom:20%;right:25%;"><div class="fbi ci-n"><img src="https://cdn.simpleicons.org/google/4285F4" style="width:18px;height:18px"></div><div><span class="fbn">NotebookLM</span><span class="fbs">Método documentado</span></div></div>
+      <div class="fb fb4" style="top:25%;right:55%;"><div class="fbi ci-f"><img src="https://cdn.simpleicons.org/freepik/1273EB" style="width:18px;height:18px"></div><div><span class="fbn">Freepik AI</span><span class="fbs">Criação de conteúdo</span></div></div>
     </div>
   </div>
 </section>
