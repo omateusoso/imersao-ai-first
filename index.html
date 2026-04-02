@@ -301,101 +301,82 @@ Actually .hero is inside <section> but .hero IS the child. */
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  max-width: 1040px;
+  max-width: 900px;
   margin: 60px auto 0 auto;
-  text-align: left;
 }
 .ment-card {
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 16px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #0f0f0f;
-  border: 1px solid rgba(239, 68, 68, 0.15);
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.ment-card:hover {
-  border-color: rgba(239, 68, 68, 0.35);
-  transform: translateY(-4px);
 }
 .ment-av {
   width: 100%;
-  aspect-ratio: 16/12;
-  position: relative;
+  height: 288px;
   overflow: hidden;
-  background: #0a0a0a;
+  position: relative;
 }
 .ment-av img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  display: block;
+  transition: transform 0.5s ease;
 }
-.ment-overlay {
+.ment-card:hover .ment-av img {
+  transform: scale(1.05);
+}
+.ment-av-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, #0f0f0f 0%, rgba(15,15,15,0.7) 20%, transparent 60%);
-  z-index: 1;
-}
-.ment-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 32px 32px 24px 32px;
-  z-index: 2;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.95) 100%);
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
 }
-.ment-name {
-  font-family: var(--fh);
-  font-size: 26px;
-  font-weight: 800;
+.ment-card-title {
   color: #fff;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: 1.1rem;
+  font-weight: 700;
   margin-bottom: 2px;
 }
-.ment-role {
-  font-size: 13px;
+.ment-card-role {
+  color: #f87171;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #ef4444;
-  letter-spacing: 0.02em;
 }
 .ment-body {
-  padding: 0 32px 32px 32px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  background: #0f0f0f;
-  position: relative;
-  z-index: 3;
+  flex-grow: 1;
 }
 .ment-desc {
-  font-size: 15px;
-  color: #a3a3a3;
-  line-height: 1.65;
-  margin-bottom: 32px;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  margin-bottom: 20px;
 }
 .ment-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 24px;
   margin-top: auto;
-  margin-bottom: 32px;
 }
 .ment-tag {
-  font-size: 11px;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #ef4444;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  padding: 6px 14px;
-  border-radius: 100px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: #f87171;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 4px 12px;
+  border-radius: 100px;
 }
 .ment-socials {
   display: flex;
@@ -406,24 +387,15 @@ Actually .hero is inside <section> but .hero IS the child. */
   height: 36px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
 }
-.ms-icon svg {
-  width: 16px;
-  height: 16px;
-  stroke: #737373;
-  transition: stroke 0.2s;
-}
 .ms-icon:hover {
+  transform: scale(1.1);
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-}
-.ms-icon:hover svg {
-  stroke: #ffffff;
 }
 @media(max-width: 900px) {
   .ment-grid { grid-template-columns: 1fr !important; }
@@ -810,10 +782,9 @@ Actually .hero is inside <section> but .hero IS the child. */
       <div class="ment-card">
         <div class="ment-av">
           <img src="silviane.png" alt="Silviane Lawall" />
-          <div class="ment-overlay"></div>
-          <div class="ment-info">
-            <div class="ment-name">Silviane Lawall</div>
-            <div class="ment-role">Co-Founder &amp; CEO</div>
+          <div class="ment-av-overlay">
+            <div class="ment-card-title">Silviane Lawall</div>
+            <div class="ment-card-role">Co-Founder & CEO</div>
           </div>
         </div>
         <div class="ment-body">
@@ -824,9 +795,9 @@ Actually .hero is inside <section> but .hero IS the child. */
             <span class="ment-tag">Negócios</span>
           </div>
           <div class="ment-socials">
-            <a href="#" class="ms-icon" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-            <a href="#" class="ms-icon" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="#" class="ms-icon" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+            <a href="#" class="ms-icon" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="#" class="ms-icon" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="#" class="ms-icon" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
           </div>
         </div>
       </div>
@@ -834,23 +805,22 @@ Actually .hero is inside <section> but .hero IS the child. */
       <div class="ment-card">
         <div class="ment-av">
           <img src="ricardo.png" alt="Ricardo Werlang" />
-          <div class="ment-overlay"></div>
-          <div class="ment-info">
-            <div class="ment-name">Ricardo Werlang</div>
-            <div class="ment-role">Co-Founder &amp; CTO</div>
+          <div class="ment-av-overlay">
+            <div class="ment-card-title">Ricardo Werlang</div>
+            <div class="ment-card-role">Co-Founder & CTO</div>
           </div>
         </div>
         <div class="ment-body">
-          <p class="ment-desc">Estrategista Digital, Mentor e Expert em Negócios de Conhecimento e IA. Engenheiro de Computação e Mestre em IA com mais de 15 anos transformando tecnologia em resultado real para negócios. Acelera especialistas e empreendedores com método, inovação e agentes inteligentes para escalar conhecimento e faturar mais.</p>
+          <p class="ment-desc">Ricardo não descobriu a Inteligência Artificial ontem. Há mais de 15 anos trabalha na interseção entre tecnologia, educação e negócios. Mestre em IA com ênfase em Gestão do Conhecimento — tem o dom raro de pegar tecnologia complexa e transformar em método aplicável para quem não é técnico.</p>
           <div class="ment-tags">
             <span class="ment-tag">Tecnologia</span>
             <span class="ment-tag">IA</span>
             <span class="ment-tag">Inovação</span>
           </div>
           <div class="ment-socials">
-            <a href="#" class="ms-icon" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-            <a href="#" class="ms-icon" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-            <a href="#" class="ms-icon" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
+            <a href="#" class="ms-icon" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a href="#" class="ms-icon" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="#" class="ms-icon" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a>
           </div>
         </div>
       </div>
