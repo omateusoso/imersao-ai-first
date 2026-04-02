@@ -273,9 +273,19 @@ footer{border-top:1px solid var(--b);padding:28px 0}
 @media(max-width:900px){
   .wrap{padding:0 22px}
   .nav-in{padding:14px 22px}
-  .hero{grid-template-columns:1fr;min-height:auto;padding:24px 0 0}
-  .hl{padding:0 22px 10px}
-  .hr{display:flex; transform:scale(0.6); transform-origin:top center; margin-top:10px; margin-bottom:-250px; width:100%}
+  .hero{grid-template-columns:1fr;min-height:auto;padding:64px 0 0}
+  .hl{padding:0 32px 10px}
+  
+  .hr{display:flex; width:100%; min-height:auto; padding: 24px 32px 48px; justify-content:center; transform:none; margin:0;}
+  .hr-inner{width:100%; height:auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;}
+  
+  .fb{position:relative!important; top:auto!important; bottom:auto!important; left:auto!important; right:auto!important; animation:none!important; transform:none!important; width:100%; padding:14px 16px; border-radius:12px; gap:12px; flex-direction:column; align-items:flex-start;}
+  .fbi{width:36px; height:36px;}
+  .fbi img{width:18px!important; height:18px!important;}
+  .fbn{font-size:15px; white-space:normal; line-height:1.2;}
+  .fbs{font-size:12px; white-space:normal; margin-top:2px;}
+  .fb1::before{top:-10px; left:12px; font-size:10px; padding:2px 8px;}
+  
   .ce-grid, .vir-grid, .ba-grid, .blocos, .ment-grid, .depo-grid {grid-template-columns:1fr !important;}
   .vir-mid{display:none}
   .choice{grid-template-columns:1fr}
