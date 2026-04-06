@@ -268,22 +268,41 @@ footer{border-top:1px solid var(--b);padding:28px 0}
 @media(max-width:900px){
   .wrap{padding:0 22px}
   .nav-in{padding:14px 22px}
-  .hero{grid-template-columns:1fr;min-height:auto;padding:64px 0 0}
-  .hl{padding:0 32px 10px}
-  
-  .hr{display:flex; width:100%; min-height:auto; padding: 24px 32px 48px; justify-content:center; transform:none; margin:0;}
-  .hr-inner{width:100%; height:auto; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;}
-  
-  .fb{position:relative!important; top:auto!important; bottom:auto!important; left:auto!important; right:auto!important; animation:none!important; transform:none!important; width:100%; padding:14px 16px; border-radius:12px; gap:12px; flex-direction:column; align-items:flex-start;}
-  .fbi{width:36px; height:36px;}
-  .fbi img{width:18px!important; height:18px!important;}
-  .fbn{font-size:15px; white-space:normal; line-height:1.2;}
-  .fbs{font-size:12px; white-space:normal; margin-top:2px;}
-  .fb1::before{top:-10px; left:12px; font-size:10px; padding:2px 8px;}
-  
+  #hero-sec {
+    background-image: url('banner-mob.png?v=4') !important;
+    background-position: top center !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-color: #0a0a0a !important;
+  }
+  .hero{
+    grid-template-columns:1fr !important;
+    min-height:auto !important;
+    padding: 103vw 0 40px !important; /* Back to taller expert area */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .hl{
+    padding: 40px 24px 60px !important;
+    max-width: 580px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .hsub {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  .trust {
+    justify-content: center !important;
+    gap: 24px !important;
+    flex-wrap: wrap !important;
+  }
   .ce-grid, .vir-grid, .ba-grid, .blocos, .ment-grid, .depo-grid {grid-template-columns:1fr !important;}
-  .vir-mid{display:none}
-  .choice{grid-template-columns:1fr}
+  .vir-mid, .hr{display:none !important}
+  .choice{grid-template-columns:1fr !important}
   .sec{padding:56px 0}
 }
 
@@ -439,25 +458,22 @@ Actually .hero is inside <section> but .hero IS the child. */
   C) "Mais Presença nas Sessões. Menos Horas no Bastidor." <i data-lucide="arrow-left" class="icon-inline"></i> fala com a dor core do avatar
   Recomendamos A para headline + C como subheadline.
 -->
-<section style="padding:0;position:relative;overflow:hidden;">
-  <div class="hero-bg"></div>
-  <div class="hero-gl"></div>
-  <div class="hero-gl-2"></div>
+<section id="hero-sec" style="padding:0;position:relative;overflow:hidden; background: #0a0a0a url('banner-desk.png?v=2') no-repeat center right / cover;">
   <div class="hero" style="width:100%">
 
     <div class="hl">
       <div class="hbadge"><div class="bdot"></div>11 de Abril · Evento ao Vivo</div>
 
       <h1 class="h1">
-        Você Criou um Negócio<br>
-        para ser Livre.<br>
-        <span class="red">A IA Vai te Devolver<br>
-        Essa&nbsp;Liberdade.</span>
+        Foque em Mentoria,<br>
+        não no operacional.<br>
+        <span class="red">A IA devolve sua<br>
+        Liberdade&nbsp;de&nbsp;vez.</span>
       </h1>
 
       <p class="hsub">
-        <strong>Você não precisa de mais horas. Precisa de IA trabalhando por&nbsp;você.</strong><br>
-        Em uma tarde, descubra como Claude, Gemini e NotebookLM assumem o operacional — e devolvem presença, energia e tempo para o que&nbsp;importa.
+        <strong>IA não é ferramenta, é estratégia de escala.</strong><br>
+        Em uma única tarde, aprenda a automatizar o operacional para focar no que realmente gera resultado e impacto.
       </p>
 
       <a href="#cta" class="btn">Quero Minha Vaga <span class="ar"><i data-lucide="arrow-right" class="icon-inline"></i></span></a>
@@ -475,14 +491,7 @@ Actually .hero is inside <section> but .hero IS the child. */
       </div>
     </div>
 
-    <div class="hr">
-      <div class="hr-inner">
-        <div class="fb fb1" style="top:20px; left:-10px;"><div class="fbi ci-c"><img src="https://cdn.simpleicons.org/claude/D1CAC2"></div><div><span class="fbn">Claude</span><span class="fbs">Cowork · Skills · Code</span></div></div>
-        <div class="fb fb2" style="top:200px; right:-50px;"><div class="fbi ci-g"><img src="https://cdn.simpleicons.org/googlegemini/8E75B2"></div><div><span class="fbn">Gemini</span><span class="fbs">Google Workspace</span></div></div>
-        <div class="fb fb4" style="bottom:180px; right:20px;"><div class="fbi ci-f"><img src="https://cdn.simpleicons.org/freepik/1273EB"></div><div><span class="fbn">Freepik AI</span><span class="fbs">Criação Visual</span></div></div>
-        <div class="fb fb3" style="bottom:0px; left:40px;"><div class="fbi ci-n"><img src="https://cdn.simpleicons.org/google/4285F4"></div><div><span class="fbn">NotebookLM</span><span class="fbs">Método Documentado</span></div></div>
-      </div>
-    </div>
+    <div class="hr"></div>
   </div>
 </section>
 
@@ -493,9 +502,8 @@ Actually .hero is inside <section> but .hero IS the child. */
     <h2 style="font-size:clamp(26px,2.6vw,38px);font-weight:800;margin-bottom:0;max-width:640px">Na sua área, a IA está sendo usada <span class="red">muito abaixo do&nbsp;potencial.</span></h2>
     <div class="ce-grid">
       <div class="ce-text">
-        <p>Pesquisas mostram que mentores e consultores têm <strong>uma das maiores coberturas teóricas de IA</strong> — a tecnologia já existe para transformar profundamente o que vocês fazem.</p>
-        <p>Mas o uso real? <strong>Uma fração do que poderia ser.</strong> Não é falta de inteligência. É falta de um mapa — específico para o modelo de negócio de um mentor.</p>
-        <p><strong>Essa lacuna é a janela de 2026. E ela não vai durar.</strong></p>
+        <p>A tecnologia para transformar seu negócio já existe, mas o uso real ainda é mínimo. <strong>Não é falta de inteligência, é falta de um mapa específico para mentores.</strong></p>
+        <p><strong>A janela de 2026 está aberta — e não vai durar.</strong></p>
         <p class="ce-src">Fonte: <a href="https://www.anthropic.com/research/labor-market-impacts" target="_blank" rel="noopener">Anthropic — Labor Market Impacts of Claude (2026)</a></p>
 
         <!-- Pain recognition inline -->
@@ -579,8 +587,8 @@ Actually .hero is inside <section> but .hero IS the child. */
 <section class="sec virada">
   <div class="wrap">
     <div class="tag">A Virada de Mentalidade</div>
-    <h2 style="font-size:clamp(26px,2.6vw,36px);font-weight:800;margin-bottom:6px">Você não está sobrecarregado por falta de esforço. <span class="red">Está usando IA do jeito&nbsp;errado.</span></h2>
-    <p style="font-size:15px;color:var(--m)">A diferença entre quem recupera a liberdade e quem continua preso não é tecnologia — é&nbsp;arquitetura.</p>
+    <h2 style="font-size:clamp(26px,2.6vw,36px);font-weight:800;margin-bottom:6px">O Fim da Sobrecarga Operacional.</h2>
+    <p style="font-size:15px;color:var(--m)">A diferença entre escala e exaustão é a arquitetura de IA que você utiliza.</p>
     <div class="vir-grid">
       <div class="vir-card">
         <div class="vir-badge inc">Como está hoje</div>
@@ -835,9 +843,9 @@ Actually .hero is inside <section> but .hero IS the child. */
     
     <div class="ment-grid">
       <div class="ment-card">
-        <div class="ment-av">
-          <img src="ricardo.png" alt="Ricardo Werlang" />
-          <div class="ment-av-overlay">
+        <div class="ment-av" style="height:auto; background:var(--s2); padding:40px; display:flex; align-items:center; justify-content:center;">
+          <div class="bh-icon" style="background:var(--red); width:60px; height:60px; border-radius:50%; font-size:24px; color:#fff;">RW</div>
+          <div class="ment-av-overlay" style="position:relative; background:none; padding:0; margin-top:20px;">
             <div class="ment-card-title">Ricardo Werlang</div>
             <div class="ment-card-role">Co-Founder & CTO</div>
           </div>
@@ -858,9 +866,9 @@ Actually .hero is inside <section> but .hero IS the child. */
       </div>
 
       <div class="ment-card">
-        <div class="ment-av">
-          <img src="silviane.png" alt="Silviane Lawall" />
-          <div class="ment-av-overlay">
+        <div class="ment-av" style="height:auto; background:var(--s2); padding:40px; display:flex; align-items:center; justify-content:center;">
+          <div class="bh-icon" style="background:var(--red); width:60px; height:60px; border-radius:50%; font-size:24px; color:#fff;">SL</div>
+          <div class="ment-av-overlay" style="position:relative; background:none; padding:0; margin-top:20px;">
             <div class="ment-card-title">Silviane Lawall</div>
             <div class="ment-card-role">Co-Founder & CEO</div>
           </div>
